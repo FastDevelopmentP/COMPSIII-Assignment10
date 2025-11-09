@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 import sqlite3
 import re
 from word2number import w2n
+import matplotlib.pyplot as plt
 
 import pandas as pd
 
@@ -39,4 +40,32 @@ month = df['month'].value_counts().sort_index()
 print(f"Amount of songs listened to by Month:\n{month}")
 
 
-query = "SELECT * FROM streaming_data;"
+# 1) Bar chart: songs by day
+plt.figure()
+days.plot(kind='bar')
+plt.title('Songs Listened by Day of the Week')
+plt.xlabel('Day')
+plt.ylabel('Count')
+plt.tight_layout()
+plt.savefig('songs_by_day.png')
+plt.close()
+
+# 2) Line chart: songs by month
+plt.figure()
+month.plot(kind='line')
+plt.title('Songs Listened by Month')
+plt.xlabel('Month')
+plt.ylabel('Count')
+plt.tight_layout()
+plt.savefig('songs_by_month.png')
+plt.close()
+
+# 3) Histogram: duration in seconds
+plt.figure()
+df['duration_seconds'].plot(kind='hist')
+plt.title('Duration of Songs Streamed in seconds')
+plt.xlabel('Seconds')
+plt.ylabel('Frequency')
+plt.tight_layout()
+plt.savefig('duration_histogram.png')
+plt.close()
